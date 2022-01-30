@@ -8,7 +8,9 @@
     <!-- css file link -->
     <link rel="stylesheet" href="quiz.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  </head>
+    <script type="text/javascript" src="html2canvas.min.js"></script>
+    <script type="text/javascript" src="canvas2image.js"></script>
+</head>
 <body>
     <img src="quizbg.jpg" alt="img" id="img" class="img">
     <h1 id="title">Quiz by Shrey</h1>
@@ -34,17 +36,18 @@
     </div>
 
     <!-- scoreboard section -->
-    <div id="scoreboard">
+    <div id="scoreboard" class="test">
         <img src="logo.png" alt="">
         <h2 id="score-title">Your Score</h2>
         <h2 id="score"></h2>
         <button type="button" id="score-btn" onclick="backToQuiz()">Back to Quiz</button>
         <button type="button" id="check-answer" onclick="checkAnswer()">Check Answers</button>
+        <button type="button" id="save" style="margin-top: 15px" >Share score</button>
     </div>
 
     <!-- answers section -->
     <div id="answerBank">
-        <h2>Answers :</h2>
+        <h2>Answers :</h2> 
         <ol type="1" id="answers">
 
         </ol>
@@ -53,8 +56,36 @@
 
     <!-- javascript file source -->
     <script src="quiz.js"></script>
-    <!-- Go to www.addthis.com/dashboard to customize your tools -->
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-61e53e53ef83afbf"></script>
-
+        <script type="text/javascript">
+        var test = $(".test").get(0);
+      // save
+      $('#save').click(function(e) {
+          //alert('inside save');
+          html2canvas(test).then(function(canvas) {
+        // canvas width
+        var canvasWidth = canvas.width;
+        // canvas height
+        var canvasHeight = canvas.height;
+        // render canvas
+        //$('.toCanvas').after(canvas);
+        // show 'to image' button
+        //$('.toPic').show(1000);
+        // convert canvas to image
+        //$('.toPic').click(function(e) {
+      var img = Canvas2Image.convertToImage(canvas, canvasWidth, canvasHeight);
+      // render image
+        /*$(".toPic").after(img);
+        let type = $('#sel').val(); // image type
+        let w = $('#imgW').val(); // image width
+        let h = $('#imgH').val(); // image height
+        let f = $('#imgFileName').val(); // file name*/
+        /*w = (w === '') ? canvasWidth : w;
+        h = (h === '') ? canvasHeight : h;*/
+        // save as image
+        Canvas2Image.saveAsImage(canvas, 400, 400, "png", "score");
+      //});
+  });
+});
+    </script>
 </body>
 </html>
